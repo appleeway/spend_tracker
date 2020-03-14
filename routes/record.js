@@ -1,6 +1,7 @@
 // routes/record.js
 const express = require('express')
 const router = express.Router()
+const Record = require('../models/record')
 
 // 新增資料網頁
 router.get('/new', (req, res) => {
