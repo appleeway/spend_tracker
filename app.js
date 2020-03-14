@@ -13,6 +13,7 @@ app.set('view engine', 'handlebars')
 
 // routes
 app.use('/', require('./routes/home'))
+app.use('/records', require('./routes/record'))
 
 // listening port
 app.listen(port, () => {
