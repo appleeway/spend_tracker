@@ -12,7 +12,7 @@ router.get('/', authenticated, (req, res) => {
   const category = req.query.category || ''
   const _regex_category = new RegExp(category)
 
-  Record.find({ category: { $regex: _regex_category } })
+  Record.find({ userId: req.user._id, category: { $regex: _regex_category } })
     .lean()
     .then(records => {
       // 計算總金額
