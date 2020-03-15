@@ -36,19 +36,46 @@ router.get('/', (req, res) => {
 })
 
 // 修改資料網頁
-router.get('/:id/update', (req, res) => {
-  const id = req.params.id
-  res.render('update', { id })
+router.get('/:id/edit', (req, res) => {
+  Record.findById(req.params.id)
+    .lean()
+    .exec((err, record) => {
+      if (err) return console.error(err)
+
+      let date = record.date.toISOString().split("T")[0]
+      record.date = date
+
+      return res.render('addupdate', {
+        record,
+        action: "修改"
+      })
+    })
 })
 
 // 修改一筆資料
 router.put('/:id', (req, res) => {
-  res.redirect('/')
+  Record.findById(req.params.id, (err, record) => {
+    if (err) return console.error(err)
+
+    Object.assign(record, req.body)
+
+    record.date = new Date(req.body.date)
+    record.save(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
+  })
 })
 
 // 刪除一筆資料
 router.delete('/:id', (req, res) => {
-  res.redirect('/')
+  Record.findById(req.params.id, (err, record) => {
+    if (err) return console.error(err)
+    record.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
+  })
 })
 
 module.exports = router

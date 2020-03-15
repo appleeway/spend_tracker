@@ -28,6 +28,9 @@ db.once('open', () => {
 // setting bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// setting method_override
+app.use(methodOverride('_method'))
+
 // setting express-handlebars here
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')

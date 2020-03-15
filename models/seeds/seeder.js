@@ -30,24 +30,24 @@ db.once('open', () => {
   const recordData = [
     {
       name: '沙發',
-      category: '家居物業',
+      category: 'home',
       amount: '20000'
     },
     {
       name: '高鐵票',
-      category: '交通出行',
+      category: 'traffic',
       amount: '1350'
     }, {
       name: '打保齡球',
-      category: '休閒娛樂',
+      category: 'entertainment',
       amount: '150'
     }, {
       name: '冰淇淋',
-      category: '餐飲食品',
+      category: 'food',
       amount: '45'
     }, {
       name: '借小明錢',
-      category: '其他',
+      category: 'other',
       amount: '5000'
     }
   ]
