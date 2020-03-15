@@ -7,6 +7,7 @@ require('./handlebars_helper')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
+const passport = require('passport')
 
 
 // set connection to mongoDB
@@ -36,6 +37,19 @@ app.use(methodOverride('_method'))
 // setting express-handlebars here
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+
+// 使用 Passport 
+app.use(passport.initialize())
+app.use(passport.session())
+
+// 載入 Passport config
+require('./config/passport')(passport)
+
+// 登入後可以取得使用者的資訊方便我們在 view 裡面直接使用
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  next()
+})
 
 // setting session
 app.use(session({
