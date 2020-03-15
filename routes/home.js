@@ -5,11 +5,27 @@ const Record = require('../models/record')
 
 // routes
 router.get('/', (req, res) => {
-  Record.find()
+
+  const category = req.query.category || ''
+  const _regex_category = new RegExp(category)
+
+  Record.find({ category: { $regex: _regex_category } })
     .lean()
-    .exec((err, records) => {
-      if (err) return console.error(err)
-      return res.render('index', { records })
+    .then(records => {
+      // 計算總金額
+      let totalAmount = 0
+      if (records.length > 0) totalAmount = records.map(record => parseInt(record.amount)).reduce((a, b) => a + b)
+
+      records.forEach((item, index, array) => {
+        let date = item.date.toISOString().split("T")[0]
+        array[index].date = date
+      })
+
+      return res.render('index', {
+        records,
+        totalAmount,
+        category
+      })
     })
 })
 

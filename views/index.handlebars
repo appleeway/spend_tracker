@@ -4,45 +4,18 @@
 
   <div class="btn-group col-5 justify-content-center">
 
-    <div class="dropdown">
-      <button type="button" class="btn btn-outline-secondary dropdown-toggle monthDropdownBtn" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false" data-item="{{filterMonth}}">
-        {{#if filterMonth}}
-        {{{filterMonth}}} 月份
-        {{else}}
-        不按月份
-        {{/if}}
+    <div class="dropdown mb-2 col-6">
+      <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Category {{#if category}} : {{category}}{{/if}}
       </button>
-
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="/?filterMonth=&filterCategory={{filterCategory}}">不按月份</a>
-
-        {{#each monthList}}
-        <a class="dropdown-item monthDropdownItem"
-          href="/?filterMonth={{this.number}}&filterCategory={{filterCategory}}">{{this.name}}</a>
-        {{/each}}
-
-      </div>
-    </div>
-
-    <div class="dropdown">
-      <button type="button" class="btn btn-outline-secondary dropdown-toggle ml-2 categoryDropdownBtn"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-item="{{filterCategory}}">
-        {{#if filterCategoryChineseName}}
-        {{{filterCategoryChineseName}}} 類別
-        {{else}}
-        不按類別
-        {{/if}}
-      </button>
-
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="/?filterCategory=&filterMonth={{filterMonth}}">不按類別</a>
-
-        {{#each categoryList}}
-        <a class="dropdown-item categoryDropdownItem"
-          href="/?filterCategory={{@key}}&filterMonth={{filterMonth}}">{{this.chineseName}}</a>
-        {{/each}}
-
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/records">All</a>
+        <a class="dropdown-item" href="/?category=home"><i class="fas fa-home mr-2"></i>Housing</a>
+        <a class="dropdown-item" href="/?category=traffic"><i class="fas fa-shuttle-van mr-2"></i>Transportation</a>
+        <a class="dropdown-item" href="/?category=entertainment"><i class="fas fa-grin-beam mr-2"></i>Entertainment</a>
+        <a class="dropdown-item" href="/?category=food"><i class="fas fa-utensils mr-2"></i>Food</a>
+        <a class="dropdown-item" href="/?category=other"><i class="fas fa-pen mr-2"></i>Others</a>
       </div>
     </div>
 
@@ -65,20 +38,9 @@
 
       <div class="list-group list-group-flush col-10 m-auto d-block mb-3 ">
         {{#each records}}
-        {{!-- {{#if_even @index}} --}}
         <div class="list-group-item mb-3 even item">
-          {{!-- {{else}} --}}
-          {{!-- <div class="list-group-item mb-3 item"> --}}
-          {{!-- {{/if_even}} --}}
 
           <div class="row ">
-            {{!-- <div class="d-inline-block col-1 icon">
-
-                {{#value_of categoryList}}
-            <i class="fas fa-{{categoryImgFontAwesomeName}} mt-3 ml-3 category-img"></i>
-            {{/value_of}}
-
-              </div> --}}
             <div class="d-inline-block col-5">
               <h4>{{this.name}}</h4>
               <span>{{this.date}}</span>
@@ -94,9 +56,6 @@
                 href="#">刪除</a>
 
             </div>
-            {{!-- <div class=" d-inline-block col-3 my-auto ml-5">
-
-              </div> --}}
           </div>
         </div>
 
