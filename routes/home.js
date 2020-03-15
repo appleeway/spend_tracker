@@ -3,8 +3,11 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 
+// 載入 auth middleware 裡的 authenticated 方法
+const { authenticated } = require('../config/auth')
+
 // routes
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
 
   const category = req.query.category || ''
   const _regex_category = new RegExp(category)

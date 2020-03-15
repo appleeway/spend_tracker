@@ -4,8 +4,11 @@ const router = express.Router()
 const moment = require('moment')
 const Record = require('../models/record')
 
+// 載入 auth middleware 裡的 authenticated 方法
+const { authenticated } = require('../config/auth')
+
 // 新增資料網頁 
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
   const today = moment().format('YYYY-MM-DD')
   const record = { date: today }
   res.render('addUpdate', {
@@ -15,7 +18,7 @@ router.get('/new', (req, res) => {
 })
 
 // 新增一筆資料 
-router.post('/new', (req, res) => {
+router.post('/new', authenticated, (req, res) => {
   const { name, category, amount, date } = req.body
   const record = Record({
     name,
@@ -31,12 +34,12 @@ router.post('/new', (req, res) => {
 })
 
 // 瀏覽全部資料 
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   res.redirect('/')
 })
 
 // 修改資料網頁
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', authenticated, (req, res) => {
   Record.findById(req.params.id)
     .lean()
     .exec((err, record) => {
@@ -53,7 +56,7 @@ router.get('/:id/edit', (req, res) => {
 })
 
 // 修改一筆資料
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticated, (req, res) => {
   Record.findById(req.params.id, (err, record) => {
     if (err) return console.error(err)
 
@@ -68,7 +71,7 @@ router.put('/:id', (req, res) => {
 })
 
 // 刪除一筆資料
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticated, (req, res) => {
   Record.findById(req.params.id, (err, record) => {
     if (err) return console.error(err)
     record.remove(err => {

@@ -38,6 +38,13 @@ app.use(methodOverride('_method'))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+// setting session
+app.use(session({
+  secret: 'hotcat',
+  resave: false,
+  saveUninitialized: true,
+}))
+
 // 使用 Passport 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -50,13 +57,6 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   next()
 })
-
-// setting session
-app.use(session({
-  secret: 'hotcat',
-  resave: false,
-  saveUninitialized: true,
-}))
 
 // routes
 app.use('/', require('./routes/home'))
