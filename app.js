@@ -18,6 +18,11 @@ const app = express()
 const port = 3000
 const db = mongoose.connection
 
+// 判別開發環境
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 // DB connect error
 db.on('error', () => {
   console.log('mongoDB error!')
@@ -63,6 +68,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 // listening port
 app.listen(port, () => {
