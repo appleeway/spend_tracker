@@ -12,7 +12,7 @@ const flash = require('connect-flash')
 
 
 // set connection to mongoDB
-mongoose.connect('mongodb://localhost/record', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/record', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
 
 // define const value
 const app = express()
@@ -77,6 +77,6 @@ app.use('/users', require('./routes/user'))
 app.use('/auth', require('./routes/auths'))
 
 // listening port
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Express is listening on localhost:${port}`)
 })
