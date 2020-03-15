@@ -4,7 +4,7 @@ const router = express.Router()
 const moment = require('moment')
 const Record = require('../models/record')
 
-// 新增資料網頁 ok
+// 新增資料網頁 
 router.get('/new', (req, res) => {
   const today = moment().format('YYYY-MM-DD')
   const record = { date: today }
@@ -14,7 +14,7 @@ router.get('/new', (req, res) => {
   })
 })
 
-// 新增一筆資料 ok
+// 新增一筆資料 
 router.post('/new', (req, res) => {
   const { name, category, amount, date } = req.body
   const record = Record({
@@ -30,7 +30,7 @@ router.post('/new', (req, res) => {
   })
 })
 
-// 瀏覽全部資料 ok
+// 瀏覽全部資料 
 router.get('/', (req, res) => {
   res.redirect('/')
 })
