@@ -1,1 +1,128 @@
-<h2>This area will be index page</h2>
+{{!-- /views/index.handlebars --}}
+
+<div class="py-2 mt-3 bg-white text-center ">
+
+  <div class="btn-group col-5 justify-content-center">
+
+    <div class="dropdown">
+      <button type="button" class="btn btn-outline-secondary dropdown-toggle monthDropdownBtn" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" data-item="{{filterMonth}}">
+        {{#if filterMonth}}
+        {{{filterMonth}}} 月份
+        {{else}}
+        不按月份
+        {{/if}}
+      </button>
+
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/?filterMonth=&filterCategory={{filterCategory}}">不按月份</a>
+
+        {{#each monthList}}
+        <a class="dropdown-item monthDropdownItem"
+          href="/?filterMonth={{this.number}}&filterCategory={{filterCategory}}">{{this.name}}</a>
+        {{/each}}
+
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button type="button" class="btn btn-outline-secondary dropdown-toggle ml-2 categoryDropdownBtn"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-item="{{filterCategory}}">
+        {{#if filterCategoryChineseName}}
+        {{{filterCategoryChineseName}}} 類別
+        {{else}}
+        不按類別
+        {{/if}}
+      </button>
+
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/?filterCategory=&filterMonth={{filterMonth}}">不按類別</a>
+
+        {{#each categoryList}}
+        <a class="dropdown-item categoryDropdownItem"
+          href="/?filterCategory={{@key}}&filterMonth={{filterMonth}}">{{this.chineseName}}</a>
+        {{/each}}
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- record summary -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-10 mx-auto text-center bg-white">
+
+
+
+
+      <div class="totalAmount col-10 mx-auto d-block mb-3">
+        <h4 class="text-left">總金額：</h4>
+        <h1 class="text-right text-primary">$ {{totalAmount}}</h1>
+      </div>
+
+      <div class="list-group list-group-flush col-10 m-auto d-block mb-3 ">
+        {{#each records}}
+        {{!-- {{#if_even @index}} --}}
+        <div class="list-group-item mb-3 even item">
+          {{!-- {{else}} --}}
+          <div class="list-group-item mb-3 item">
+            {{!-- {{/if_even}} --}}
+
+            <div class="row ">
+              <div class="d-inline-block col-1 icon">
+
+                {{!-- {{#value_of categoryList}}
+            <i class="fas fa-{{categoryImgFontAwesomeName}} mt-3 ml-3 category-img"></i>
+            {{/value_of}} --}}
+
+              </div>
+              <div class="d-inline-block col-5">
+                <h4>{{this.name}}</h4>
+                <span>{{this.date}}</span>
+              </div>
+              <div class=" d-inline-block col-1 my-auto mr-5">
+                <span style="font-size: 20px; line-height:60px;">{{this.amount}}</span>
+              </div>
+
+              <div class="mt-2">
+                <a class="btn btn-outline-primary" href="/records/{{this._id}}/edit">編輯</a>
+                <!-- Button trigger modal -->
+                <a class="btn btn-outline-danger ml-3" data-toggle="modal"
+                  data-target="#trigger-deleteItem-{{this._id}}" href="#">刪除</a>
+
+              </div>
+              <div class=" d-inline-block col-3 my-auto ml-5">
+
+              </div>
+            </div>
+          </div>
+
+          {{!--  刪除動作 --}}
+          <div class="modal fade" id="trigger-deleteItem-{{this._id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <big class="font-weight-bold">確定要刪除【 {{this.name}} 】的支出紀錄嗎?</big>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                  <form action="/records/{{this._id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger mt-3">刪除</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{/each}}
+
+          <div class="totalAmount col-10 mx-auto d-block mb-3">
+            <a class="btn btn-outline-success mt-5" href="/records/new">新增支出</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

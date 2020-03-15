@@ -5,7 +5,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 
 // set connection to mongoDB
-mongoose.connect('mongodb://localhost/record', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/record', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
 
 // define const value
 const app = express()

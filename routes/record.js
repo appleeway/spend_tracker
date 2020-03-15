@@ -13,7 +13,7 @@ router.post('/new', (req, res) => {
   res.redirect('/')
 })
 
-// 瀏覽全部資料
+// 瀏覽全部資料 ok
 router.get('/', (req, res) => {
   res.redirect('/')
 })
