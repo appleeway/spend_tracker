@@ -3,6 +3,9 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+require('./handlebars_helper')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 // set connection to mongoDB
 mongoose.connect('mongodb://localhost/record', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
@@ -21,6 +24,9 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongoDB connected!')
 })
+
+// setting bodyParser
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // setting express-handlebars here
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))

@@ -1,16 +1,33 @@
 // routes/record.js
 const express = require('express')
 const router = express.Router()
+const moment = require('moment')
 const Record = require('../models/record')
 
-// 新增資料網頁
+// 新增資料網頁 ok
 router.get('/new', (req, res) => {
-  res.render('new')
+  const today = moment().format('YYYY-MM-DD')
+  const record = { date: today }
+  res.render('addUpdate', {
+    record,
+    action: "新增"
+  })
 })
 
-// 新增一筆資料
+// 新增一筆資料 ok
 router.post('/new', (req, res) => {
-  res.redirect('/')
+  const { name, category, amount, date } = req.body
+  const record = Record({
+    name,
+    category,
+    amount,
+    date,
+    // userId: req.user._id
+  })
+  record.save(err => {
+    if (err) return console.log(err)
+    return res.redirect('/')
+  })
 })
 
 // 瀏覽全部資料 ok
