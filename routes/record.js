@@ -11,7 +11,7 @@ const { authenticated } = require('../config/auth')
 router.get('/new', authenticated, (req, res) => {
   const today = moment().format('YYYY-MM-DD')
   const record = { date: today }
-  res.render('addUpdate', {
+  res.render('addupdate', {
     record,
     action: "新增"
   })

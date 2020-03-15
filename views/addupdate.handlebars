@@ -3,8 +3,6 @@
     <div class="col-10 mx-auto text-center">
       <h4>請輸入你的支出</h4>
 
-
-
       {{!-- 依不同頁面執行不同動作 --}}
       {{#ifEquals action '修改'}}
       <form action="/records/{{{record._id}}}?_method=PUT" method="POST" class="mt-5 py-5 mx-auto bg-light">
