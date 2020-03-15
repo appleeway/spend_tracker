@@ -7,6 +7,7 @@ require('./handlebars_helper')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+
 // set connection to mongoDB
 mongoose.connect('mongodb://localhost/record', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -38,6 +39,7 @@ app.set('view engine', 'handlebars')
 // routes
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
+app.use('/users', require('./routes/user'))
 
 // listening port
 app.listen(port, () => {
