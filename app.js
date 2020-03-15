@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 require('./handlebars_helper')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const session = require('express-session')
 
 
 // set connection to mongoDB
@@ -35,6 +36,13 @@ app.use(methodOverride('_method'))
 // setting express-handlebars here
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+
+// setting session
+app.use(session({
+  secret: 'hotcat',
+  resave: false,
+  saveUninitialized: true,
+}))
 
 // routes
 app.use('/', require('./routes/home'))
