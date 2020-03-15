@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const Record = require('../record')
 const User = require('../user')
+const bcrypt = require('bcryptjs')
 
 // set connection to mongoDB
 mongoose.connect('mongodb://localhost/record', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
@@ -17,15 +18,23 @@ db.once('open', () => {
 
   const user = new User({
     name: 'user1',
-    email: 'user1@gamil.com',
+    email: 'user1@gmail.com',
     password: '1234'
   })
 
-  user.save((err, user) => {
-    if (err) {
-      return console.error(err)
-    }
-  })
+  bcrypt.genSalt(10, (err, salt) =>
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) throw err
+      user.password = hash
+
+      user
+        .save()
+        .then(user => {
+          res.redirect('/')
+        })
+        .catch(err => console.log(err))
+    })
+  )
 
   const recordData = [
     {
